@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import scoreReducer from './counterSlice';
+import scoreReducer from './scoreSlice';
 import nameReducer from './nameSlice';
 export const store = configureStore({
   reducer: {
