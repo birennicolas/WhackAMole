@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { setName } from './store/nameSlice';
 import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
-import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
