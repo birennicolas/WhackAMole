@@ -72,23 +72,23 @@ export default function WelcomePage() {
         justifyContent: 'center',
       }}
     >
-      <Stack width="100vw" height="100vh" flexDirection="column" justifyContent="center" alignItems="center" gap={8} color={"white"}>
+      <Stack width="100vw" height="100vh" flexDirection="column" justifyContent="center" alignItems="center" gap={4} color={"white"}>
         <Stack flexDirection="row" width="100%" justifyContent="space-between" alignItems="center" paddingX={8}>
           <span>Score: {score}</span>
           <span>Time: {timer}s</span>
         </Stack>
         <h1>Hi, {name}!</h1>
-        <Stack spacing={4} alignItems="center">
+        <Stack gap={8} alignItems="center" justifyContent="center" height="100%">
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(4, 80px)',
-              gridTemplateRows: 'repeat(3, 80px)',
-              gap: 10,
+              gridTemplateColumns: { xs: 'repeat(3, 24vw)', md: 'repeat(4, 10vw)' },
+              gridTemplateRows: { xs: 'repeat(4, 18vw)', md: 'repeat(3, 10vw)' },
+              gap: 4,
               justifyContent: 'center',
+              alignItems: 'end',
               margin: '0 auto',
               cursor: 'url(/images/WAM_Hammer110.png), auto',
-              padding: 3,
             }}
           >
             {[...Array(12)].map((_, idx) => (
@@ -97,7 +97,7 @@ export default function WelcomePage() {
                 component="img"
                 src={activeMoles.includes(idx) ? "/images/WAM_Mole.png" : "/images/WAM_Hole.png"}
                 alt={activeMoles.includes(idx) ? "WAM Mole" : "WAM Hole"}
-                sx={{ width: 120, height: 'auto', transition: '0.2s' }}
+                sx={{ width: 110, height: 'auto', transition: '0.2s' }}
                 onClick={() => handleMoleClick(idx)}
                 draggable={false}
               />
