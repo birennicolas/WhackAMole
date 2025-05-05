@@ -44,6 +44,7 @@ export default function WelcomePage() {
       saveScore(name, score)
         .then(() => fetchLeaderboardData())
         .then(data => setLeaderboardData(data))
+        .then(() => setLeaderboardOpen(true))
         .catch(error => console.error('Error handling game end:', error));
       return;
     }
