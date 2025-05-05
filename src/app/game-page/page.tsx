@@ -143,7 +143,7 @@ export default function WelcomePage() {
               margin: 0,
             }}
           >
-            Let's Play, {name}!
+            Let&apos;s Play, {name}!
           </Box>
           <Stack
             gap={8}
