@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import GameButton from './components/GameButton';
 
 export default function Home() {
   const [input, setInput] = useState('');
@@ -72,20 +72,9 @@ export default function Home() {
               }
             }}
           />
-          <Button 
-            type="submit" 
-            variant="contained" 
-            fullWidth
-            sx={{
-              backgroundColor: '#FF0000',
-              fontFamily: '"Press Start 2P", cursive',
-              '&:hover': {
-                backgroundColor: '#CC0000',
-              },
-            }}
-          >
+          <GameButton type="submit">
             Submit
-          </Button>
+          </GameButton>
         </Box>
     </Stack>
   );

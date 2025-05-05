@@ -5,12 +5,14 @@ import { RootState } from "../store/store";
 import { increment, reset } from "../store/scoreSlice";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Box, Stack, Button } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { Box, Stack } from "@mui/material";
 import LeaderboardModal from "../components/LeaderboardModal";
 import { saveScore, fetchLeaderboardData } from "../api/leaderboard";
 import { LeaderboardEntry } from "../types/leaderboard";
+import GameHeader from "../components/GameHeader";
+import GameBoard from "../components/GameBoard";
+import WelcomeMessage from "../components/WelcomeMessage";
+import GameButton from "../components/GameButton";
 
 export default function WelcomePage() {
   const [gameRunning, setGameRunning] = useState(false);
@@ -97,87 +99,11 @@ export default function WelcomePage() {
       }}
     >
       <Stack>
-        <Stack
-          flexDirection="row"
-          width="100vw"
-          justifyContent="space-between"
-          alignItems="center"
-          paddingX={8}
-          paddingY={2}
-          gap={4}
-        >
-          <Box
-            sx={{
-              color: '#FF0000',
-              fontSize: {
-                xs: '0.7rem',
-                sm: '1.2rem',
-                md: '1.5rem',
-                lg: '1.75rem'
-              },
-              fontWeight: 'bold',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-              fontFamily: '"Press Start 2P", cursive',
-            }}
-          >
-            Score: {score}
-          </Box>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Box
-              sx={{
-                color: '#FF0000',
-                fontSize: {
-                  xs: '0.7rem',
-                  sm: '1.2rem',
-                  md: '1.5rem',
-                  lg: '1.75rem'
-                },
-                fontWeight: 'bold',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-                fontFamily: '"Press Start 2P", cursive',
-              }}
-            >
-              Time: {timer}s
-            </Box>
-            <Box
-              component="button"
-              onClick={() => setLeaderboardOpen(true)}
-              sx={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#FFD700',
-                transition: 'color 0.2s',
-                '&:hover': {
-                  color: '#FFA500',
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  fontSize: {
-                    xs: '1.5rem',
-                    sm: '2rem',
-                    md: '2.5rem',
-                    lg: '2.5rem'
-                  }
-                }}
-              >
-                <FontAwesomeIcon 
-                  icon={faTrophy} 
-                  style={{ 
-                    filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3))',
-                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
-                  }}
-                />
-              </Box>
-            </Box>
-          </Stack>
-        </Stack>
+        <GameHeader
+          score={score}
+          timer={timer}
+          onLeaderboardOpen={() => setLeaderboardOpen(true)}
+        />
         <Stack
           flexDirection="column"
           justifyContent="center"
@@ -185,80 +111,25 @@ export default function WelcomePage() {
           gap={2}
           color={"white"}
         >
-          <Box
-            component="h1"
-            sx={{
-              color: '#FF0000',
-              fontSize: {
-                xs: '0.7rem',
-                sm: '1.2rem',
-                md: '1.5rem',
-                lg: '1.75rem'
-              },
-              fontWeight: 'bold',
-              textShadow: '2px 2px 4px rgba(247, 241, 241, 0.3)',
-              fontFamily: '"Press Start 2P", cursive',
-              margin: 0,
-            }}
-          >
-            Let&apos;s Play, {name}!
-          </Box>
+          <WelcomeMessage name={name} />
           <Stack
             gap={8}
             alignItems="center"
             justifyContent="center"
             height="100%"
           >
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "repeat(3, 24vw)",
-                  md: "repeat(4, 10vw)",
-                },
-                gridTemplateRows: {
-                  xs: "repeat(4, 18vw)",
-                  md: "repeat(3, 10vw)",
-                },
-                gap: 4,
-                justifyContent: "center",
-                alignItems: "end",
-                margin: "0 auto",
-                cursor: "url(/images/WAM_Hammer110.png) 55 55, auto",
-              }}
-            >
-              {[...Array(12)].map((_, idx) => (
-                <Box
-                  key={`hole-${idx}`}
-                  component="img"
-                  src={
-                    activeMoles.includes(idx)
-                      ? "/images/WAM_Mole.png"
-                      : "/images/WAM_Hole.png"
-                  }
-                  alt={activeMoles.includes(idx) ? "WAM Mole" : "WAM Hole"}
-                  justifyContent={"center"}
-                  sx={{
-                    width: "100%",
-                    height: "auto",
-                    transition: "0.2s",
-                    filter: hitMoles.includes(idx)
-                      ? "sepia(100%) saturate(300%) brightness(70%) hue-rotate(-50deg)"
-                      : "none",
-                  }}
-                  onClick={() => handleMoleClick(idx)}
-                  draggable={false}
-                />
-              ))}
-            </Box>
-            <Button
-              variant="contained"
-              color="primary"
+            <GameBoard
+              activeMoles={activeMoles}
+              hitMoles={hitMoles}
+              onMoleClick={handleMoleClick}
+            />
+            <GameButton
               onClick={handleStart}
               disabled={gameRunning}
+              isLoading={gameRunning}
             >
-              {gameRunning ? "Game Running..." : "Start Game"}
-            </Button>
+              Start Game
+            </GameButton>
           </Stack>
         </Stack>
       </Stack>
