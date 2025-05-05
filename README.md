@@ -1,8 +1,29 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+# Whack A Mole Game
+
+A classic Whack A Mole game built with Next.js, featuring a real-time leaderboard system!
+
+## Game Instructions
+
+1. Enter your name on the welcome screen to start
+2. Click the "Start Game" button to begin
+3. Moles will randomly pop up from the holes
+4. Click on the moles with your hammer cursor to whack them
+5. Each successful whack earns you 1 point
+6. The game lasts for 120 seconds (2 minutes)
+7. Try to get the highest score possible!
+
+## Leaderboard
+
+The game features a global leaderboard that tracks the highest scores:
+- View the leaderboard by clicking the trophy icon in the top-right corner during or after the game
+- Your score will automatically be saved to the leaderboard when the game ends
+- The leaderboard shows player names and their highest scores in descending order
+
 ## Getting Started
 
-First, run the development server:
+First, install then run the development server:
 
 ```bash
 npm run dev
@@ -16,8 +37,6 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
@@ -28,9 +47,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
