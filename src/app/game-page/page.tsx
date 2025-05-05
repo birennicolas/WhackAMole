@@ -63,7 +63,7 @@ export default function WelcomePage() {
       setActiveMoles([idx]);
     }, 700);
     return () => clearInterval(moleInterval);
-  }, [gameRunning]);
+  }, [gameRunning, timer]);
 
   const handleStart = () => {
     dispatch(reset());
@@ -125,7 +125,7 @@ export default function WelcomePage() {
             <GameButton
               onClick={handleStart}
               disabled={gameRunning}
-              isLoading={gameRunning}
+              isRunning={gameRunning}
             >
               Start Game
             </GameButton>

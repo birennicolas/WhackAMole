@@ -23,6 +23,7 @@ export default function GameHeader({ timer, onLeaderboardOpen }: GameHeaderProps
       gap={4}
     >
       <Box
+        data-testid="score"
         sx={{
           color: '#FF0000',
           fontSize: {
@@ -40,6 +41,7 @@ export default function GameHeader({ timer, onLeaderboardOpen }: GameHeaderProps
       </Box>
       <Stack direction="row" alignItems="center" spacing={2}>
         <Box
+          data-testid="timer"
           sx={{
             color: '#FF0000',
             fontSize: {
@@ -58,6 +60,8 @@ export default function GameHeader({ timer, onLeaderboardOpen }: GameHeaderProps
         <Box
           component="button"
           onClick={onLeaderboardOpen}
+          data-testid="leaderboard-button"
+          aria-label="Leaderboard"
           sx={{
             background: 'none',
             border: 'none',

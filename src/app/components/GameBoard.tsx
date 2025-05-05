@@ -9,6 +9,7 @@ interface GameBoardProps {
 export default function GameBoard({ activeMoles, hitMoles, onMoleClick }: GameBoardProps) {
   return (
     <Box
+      data-testid="game-board"
       sx={{
         display: "grid",
         gridTemplateColumns: {
@@ -29,6 +30,9 @@ export default function GameBoard({ activeMoles, hitMoles, onMoleClick }: GameBo
       {[...Array(12)].map((_, idx) => (
         <Box
           key={`hole-${idx}`}
+          data-testid="mole-hole"
+          data-active={activeMoles.includes(idx)}
+          data-hit={hitMoles.includes(idx)}
           component="img"
           src={
             activeMoles.includes(idx)

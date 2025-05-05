@@ -1,15 +1,16 @@
 import { Button, ButtonProps } from "@mui/material";
 
 interface GameButtonProps extends ButtonProps {
-  isLoading?: boolean;
+  isRunning?: boolean;
 }
 
-export default function GameButton({ isLoading, children, sx, ...props }: GameButtonProps) {
+export default function GameButton({ isRunning, children, sx, ...props }: GameButtonProps) {
   return (
     <Button
-      type="submit" 
       variant="contained" 
       fullWidth
+      disabled={isRunning}
+      data-testid="game-button"
       sx={{
         backgroundColor: '#FF0000',
         fontFamily: '"Press Start 2P", cursive',
@@ -21,7 +22,7 @@ export default function GameButton({ isLoading, children, sx, ...props }: GameBu
       }}
       {...props}
     >
-      {isLoading ? "Loading..." : children}
+      {isRunning ? "Running..." : children}
     </Button>
   );
 } 
