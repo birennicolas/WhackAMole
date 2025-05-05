@@ -2,20 +2,27 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
-import { increment } from "../store/scoreSlice";
+import { increment, reset } from "../store/scoreSlice";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Box, Stack, Button } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import LeaderboardModal from "../components/LeaderboardModal";
+import { saveScore, fetchLeaderboardData } from "../api/leaderboard";
+import { LeaderboardEntry } from "../types/leaderboard";
 
 export default function WelcomePage() {
-  const name = useSelector((state: RootState) => state.name.value);
-  const score = useSelector((state: RootState) => state.score.value);
-  const dispatch = useDispatch();
   const [gameRunning, setGameRunning] = useState(false);
   const [timer, setTimer] = useState(120);
   const [activeMoles, setActiveMoles] = useState<number[]>([]);
   const [hitMoles, setHitMoles] = useState<number[]>([]);
+  const [leaderboardOpen, setLeaderboardOpen] = useState<boolean>(false);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const name = useSelector((state: RootState) => state.name.value);
+  const score = useSelector((state: RootState) => state.score.value);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!name) {
@@ -24,17 +31,27 @@ export default function WelcomePage() {
   }, [name, router]);
 
   useEffect(() => {
+    fetchLeaderboardData()
+      .then(data => setLeaderboardData(data))
+      .catch(error => console.error('Error fetching leaderboard data:', error));
+  }, []);
+
+  useEffect(() => {
     if (!gameRunning) return;
     if (timer === 0) {
       setGameRunning(false);
       setActiveMoles([]);
+      saveScore(name, score)
+        .then(() => fetchLeaderboardData())
+        .then(data => setLeaderboardData(data))
+        .catch(error => console.error('Error handling game end:', error));
       return;
     }
     const interval = setInterval(() => {
       setTimer((prev) => prev - 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [gameRunning, timer]);
+  }, [gameRunning, timer, name, score]);
 
   useEffect(() => {
     if (!gameRunning) return;
@@ -46,6 +63,7 @@ export default function WelcomePage() {
   }, [gameRunning]);
 
   const handleStart = () => {
+    dispatch(reset());
     setTimer(120);
     setGameRunning(true);
   };
@@ -103,22 +121,61 @@ export default function WelcomePage() {
           >
             Score: {score}
           </Box>
-          <Box
-            sx={{
-              color: '#FF0000',
-              fontSize: {
-                xs: '0.7rem',
-                sm: '1.2rem',
-                md: '1.5rem',
-                lg: '1.75rem'
-              },
-              fontWeight: 'bold',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-              fontFamily: '"Press Start 2P", cursive',
-            }}
-          >
-            Time: {timer}s
-          </Box>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Box
+              sx={{
+                color: '#FF0000',
+                fontSize: {
+                  xs: '0.7rem',
+                  sm: '1.2rem',
+                  md: '1.5rem',
+                  lg: '1.75rem'
+                },
+                fontWeight: 'bold',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                fontFamily: '"Press Start 2P", cursive',
+              }}
+            >
+              Time: {timer}s
+            </Box>
+            <Box
+              component="button"
+              onClick={() => setLeaderboardOpen(true)}
+              sx={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#FFD700',
+                transition: 'color 0.2s',
+                '&:hover': {
+                  color: '#FFA500',
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  fontSize: {
+                    xs: '1.5rem',
+                    sm: '2rem',
+                    md: '2.5rem',
+                    lg: '2.5rem'
+                  }
+                }}
+              >
+                <FontAwesomeIcon 
+                  icon={faTrophy} 
+                  style={{ 
+                    filter: 'drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3))',
+                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+                  }}
+                />
+              </Box>
+            </Box>
+          </Stack>
         </Stack>
         <Stack
           flexDirection="column"
@@ -204,6 +261,12 @@ export default function WelcomePage() {
           </Stack>
         </Stack>
       </Stack>
+
+      <LeaderboardModal
+        open={leaderboardOpen}
+        onClose={() => setLeaderboardOpen(false)}
+        leaderboardData={leaderboardData}
+      />
     </Box>
   );
 }
