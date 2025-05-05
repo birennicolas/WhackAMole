@@ -1,14 +1,17 @@
 import { Box, Stack } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 interface GameHeaderProps {
-  score: number;
   timer: number;
   onLeaderboardOpen: () => void;
 }
 
-export default function GameHeader({ score, timer, onLeaderboardOpen }: GameHeaderProps) {
+export default function GameHeader({ timer, onLeaderboardOpen }: GameHeaderProps) {
+  const score = useSelector((state: RootState) => state.score.value);
+  
   return (
     <Stack
       flexDirection="row"

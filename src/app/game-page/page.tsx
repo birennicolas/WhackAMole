@@ -100,7 +100,6 @@ export default function WelcomePage() {
     >
       <Stack>
         <GameHeader
-          score={score}
           timer={timer}
           onLeaderboardOpen={() => setLeaderboardOpen(true)}
         />
@@ -111,12 +110,12 @@ export default function WelcomePage() {
           gap={2}
           color={"white"}
         >
-          <WelcomeMessage name={name} />
+          <WelcomeMessage />
           <Stack
             gap={8}
             alignItems="center"
             justifyContent="center"
-            height="100%"
+            height="75vh"
           >
             <GameBoard
               activeMoles={activeMoles}

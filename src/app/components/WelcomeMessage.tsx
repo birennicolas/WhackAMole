@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
-interface WelcomeMessageProps {
-  name: string;
-}
+export default function WelcomeMessage() {
+  const name = useSelector((state: RootState) => state.name.value);
 
-export default function WelcomeMessage({ name }: WelcomeMessageProps) {
   return (
     <Box
       component="h1"
