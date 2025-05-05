@@ -33,8 +33,7 @@ export default function Home() {
           sx={{
             color: '#FF0000',
             fontSize: {
-              xs: '0.7rem',
-              sm: '1.2rem',
+              xs: '1.2rem',
               md: '1.5rem',
               lg: '1.75rem'
             },
