@@ -6,7 +6,8 @@ import { setName } from './store/nameSlice';
 import { useRouter } from 'next/navigation';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import styles from "./page.module.css";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 export default function Home() {
   const [input, setInput] = useState('');
@@ -46,18 +47,47 @@ export default function Home() {
         >
           Whack a Mole
         </Box>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '300px' }}>
+          <TextField
+            fullWidth
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Enter your name"
-            className={styles.input}
+            variant="outlined"
+            inputProps={{ maxLength: 24 }}
+            helperText={input.length === 24 ? "Max. 24 characters" : " "}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                '&:hover fieldset': {
+                  borderColor: '#FF0000',
+                },
+              },
+              '& .MuiFormHelperText-root': {
+                color: input.length === 24 ? '#FF0000' : 'transparent',
+                textShadow: '1px 1px 2px rgba(0, 0, 0, 0.8)',
+                marginLeft: 0,
+                textAlign: 'right',
+                fontFamily: '"Press Start 2P", cursive',
+                fontSize: '0.7rem'
+              }
+            }}
           />
-          <button type="submit" className={styles.button}>
+          <Button 
+            type="submit" 
+            variant="contained" 
+            fullWidth
+            sx={{
+              backgroundColor: '#FF0000',
+              fontFamily: '"Press Start 2P", cursive',
+              '&:hover': {
+                backgroundColor: '#CC0000',
+              },
+            }}
+          >
             Submit
-          </button>
-        </form>
+          </Button>
+        </Box>
     </Stack>
   );
 }
