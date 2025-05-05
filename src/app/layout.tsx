@@ -16,6 +16,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Whack A Mole",
   description: "The classic game of whacking moles",
+  icons: {
+    icon: [
+      {
+        url: '/favicon/icon.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon/icon.png',
+        sizes: '16x16',
+        type: 'image/png',
+      }
+    ],
+    apple: [
+      {
+        url: '/favicon/icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      }
+    ],
+  },
 };
 
 export default function RootLayout({
